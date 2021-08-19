@@ -1,25 +1,21 @@
-import React from 'react'
-import {
-    Container,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
-} from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
-import Chart from './Chart'
-import Total from './Total'
-import AddCar from './AddCar'
- 
-const Dashboard = (props) => {
+import React, { useContext } from 'react';
+import { Container, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Chart } from './Chart';
+import { Total } from './Total';
+import { AddCar } from './AddCar';
+import { Context, ACTIONS } from '../redux/store';
+
+export let Dashboard = () => {
+    let state = useContext(Context);
+
     return (
         <Container maxWidth="lg" className="car-container">
-            <h4>Welcome, {props.user.username}</h4>
+            <h4>Welcome, {`${state.Store.user.username}`}</h4>
             <div className="flex-container">
-                <Chart />
-                <Total />
-                <AddCar carTotal={props.cars.length} />
+                <Chart store={state.Store} />
+                <Total store={state.Store} />
+                <AddCar dispatch={state.Dispatch} />
             </div>
             <Table>
                 <TableHead>
@@ -33,26 +29,24 @@ const Dashboard = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {props.cars.map((car, idx) => (
-                    <TableRow key={car.id}>
-                        <TableCell component="th" scope="row">
-                            {car.id}
-                        </TableCell>
-                        <TableCell>{car["name"]}</TableCell>
-                        <TableCell>{car["mpg"]}</TableCell>
-                        <TableCell>{car["cylinders"]}</TableCell>
-                        <TableCell>{car["horsepower"]}</TableCell>
-                        <TableCell>
-                            <DeleteIcon
-                                // add onClick method here
-                                className="icon text-red" />
-                        </TableCell>
-                    </TableRow>
-                ))}
+                    {state.Store.cars.map(car => (
+                        <TableRow key={car.id}>
+                            <TableCell component="th" scope="row">
+                                {car.id}
+                            </TableCell>
+                            <TableCell>{car["name"]}</TableCell>
+                            <TableCell>{car["mpg"]}</TableCell>
+                            <TableCell>{car["cylinders"]}</TableCell>
+                            <TableCell>{car["horsepower"]}</TableCell>
+                            <TableCell>
+                                <DeleteIcon
+                                    onClick={() => state.Dispatch({ type: ACTIONS.DELETE_CAR, payload: { id: car.id } })}
+                                    className="icon text-red" />
+                            </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </Container>
     )
-}
-
-export default Dashboard
+};

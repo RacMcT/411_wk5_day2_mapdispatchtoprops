@@ -1,48 +1,38 @@
-import React from 'react'
-import PieChart from 'react-minimal-pie-chart';
+import React from 'react';
+import { PieChart } from 'react-minimal-pie-chart';
 
-const Chart = (props) => {
-    // create variable "over" with all the cars whose horsepower is >= 200
-    // create variable "under" with all the cars whose horsepower is < 200
+export let Chart = ({ store }) => {    
+    let over = store.cars.reduce((accumulator, car) =>
+        accumulator + (car.horsepower >= 200 ? 1 : 0), 0
+    );
+
+    let under = store.cars.reduce((accumulator, car) =>
+        accumulator + (car.horsepower < 200 ? 1 : 0), 0
+    );
+
+    let Legend = () => {
+        return (
+            <h6>Horsepower: &nbsp;
+                <span style={{ background: '#C13C37' }}>&nbsp;&nbsp;&nbsp;</span>&nbsp;
+                <span>Over 200</span>&nbsp;
+                <span style={{ background: '#E38627' }}>&nbsp;&nbsp;&nbsp;</span>&nbsp;
+                <span>Under 200</span>
+            </h6>
+        )
+    };
 
     return (
         <div>
-            <PieChart style={{ width: '200px' }}
+            <PieChart style={{ width: '200px', height: '200px' }}
                 data={[
-                    { title: 'Over', value: 10, color: '#C13C37' },
-                    { title: 'Under', value: 15, color: '#E38627' },
+                    { title: 'Over', value: over, color: '#C13C37' },
+                    { title: 'Under', value: under, color: '#E38627' }
                 ]}
-                label
-                labelStyle={{
-                    fill: 'white',
-                    fontSize: 'small'
-                }}
+                label={({ dataEntry }) => dataEntry.value}
+                labelStyle={{ fill: 'white', fontSize: 'small' }}
             />
             <Legend />
         </div>
     )
-}
+};
 
-function Legend() {
-    return (
-        <h6>Horsepower: &nbsp;
-            <span style={{background: '#C13C37'}}>
-                &nbsp;
-                &nbsp;
-                &nbsp;
-            </span>
-            &nbsp;
-            <span>Over 200</span>
-            &nbsp;
-            <span style={{background: '#E38627'}}>
-                &nbsp;
-                &nbsp;
-                &nbsp;
-            </span>
-            &nbsp;
-            <span>Under 200</span>
-        </h6>
-    )
-}
-
-export default Chart
