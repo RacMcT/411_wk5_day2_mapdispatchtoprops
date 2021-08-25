@@ -2,54 +2,72 @@ import React, { Fragment, useState } from 'react';
 import { Button, TextField, Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { ACTIONS } from '../redux/store';
 
-export let AddCar = ({ dispatch }) => {  
-  let vehicle = { 'id': 0, 'name': '', 'mpg': '', 'cylinders': '', 'horsepower': '' };
-  let [dialog, setDialog] = useState(false);
-  let [state, setState] = useState(vehicle);
+class AddCar extends Component {
+  state = {
+    open: false,
+    name: "",
+    mpg: "",
+    cylinders: "",
+    horsepower: ""
+  }
 
-  let toggleDialog = () => setDialog((prevState) => !prevState);
+  toggleDialog = () => this.setState({ open: !this.state.open })
 
-  let txtChange = (e) => {    
-    let newState = { ...state };
-    newState[e.target.id] = e.target.value;
-    setState(newState);
-  };
+  handleTextChange = e => {
+    const newState = { ...this.state }
+    newState[e.target.id] = e.target.value
+    this.setState(newState)
+  }
 
-  let submit = (e) => {
-    e.preventDefault();
-    dispatch({ type: ACTIONS.ADD_CAR, payload: { ...state } })
-    setState(vehicle);
-    toggleDialog();
-  };
+  handleSubmit = e => {
+    e.preventDefault()
+    const payload = { ...this.state }
+    payload.id = this.props.carTotal + 1
+    delete payload.open
+    console.log("THE CAR", payload)
+    this.props.addCar(payload)
+    this.setState({ open: false })
+// add this.props.addCar function here
+    // also add this.setState to close the dialog
+  }
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.open !== this.state.open) {
+      this.setState({
+        name: "",
+        mpg: "",
+        cylinders: "",
+        horsepower: ""
+      })
+    }
+  }
 
+render(){
   return (
-    <Fragment>
-      <div style={{ textAlign: 'center' }}>
-        <h1>Add Car:</h1>
-        <Button variant="contained" className="add-car" onClick={toggleDialog}>Add Car</Button>
-      </div>
-      <Dialog open={dialog} onClose={toggleDialog} >
-        <DialogTitle>Add New Car</DialogTitle>
-        <DialogContent>
-          <form onSubmit={submit}
-            style={{ display: 'flex', flexDirection: 'column', width: '350px' }}>
-            <TextField id="name" placeholder="Name" value={state.name}
-              onChange={(e) => txtChange(e)}
-              required />
-            <TextField id="mpg" placeholder="Miles per gallon" value={state.mpg}
-              onChange={(e) => txtChange(e)}
-              required />
-            <TextField id="cylinders" placeholder="Cylinders" value={state.cylinders}
-              onChange={(e) => txtChange(e)}
-              required />
-            <TextField id="horsepower" placeholder="Horsepower" value={state.horsepower}
-              onChange={(e) => txtChange(e)}
-              required />
-            <br />
-            <Button variant="contained" color="primary" type="submit">Submit</Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </Fragment>
+      <Fragment>
+        <div style={{ textAlign: "center" }}>
+          <h1>Add Car:</h1>
+          <Button variant="contained" className="add-car" onClick={this.toggleDialog}>
+            Add Car
+          </Button>
+        </div>
+        <div>
+          <Dialog open={this.state.open} onClose={this.toggleDialog}>
+            <DialogTitle>Add New Car</DialogTitle>
+            <DialogContent>
+              <form onSubmit={this.handleSubmit} style={{ display: "flex", flexDirection: "column", width: "350px" }}>
+                <TextField id="name" placeholder="Name" value={this.state.name} onChange={this.handleTextChange} required />
+                <TextField id="mpg" placeholder="Miles per gallon" value={this.state.mpg} onChange={this.handleTextChange} required />
+                <TextField id="cylinders" placeholder="Cylinders" value={this.state.cylinders} onChange={this.handleTextChange} required />
+                <TextField id="horsepower" placeholder="Horsepower" value={this.state.horsepower} onChange={this.handleTextChange} required />
+                <br />
+                <Button variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </Fragment>
   )
-};
+  }
+}
