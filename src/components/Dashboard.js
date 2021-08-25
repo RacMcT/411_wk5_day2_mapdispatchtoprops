@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Container, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Chart } from './Chart';
-import { Total } from './Total';
-import { AddCar } from './AddCar';
+import Chart from "../containers/Chart"
+import Total from "../containers/Total"
+import AddCar from "../containers/AddCar"
 
 //Used stackoverflow examples to reformat components- starting with Dashboard!
 

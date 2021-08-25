@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import { Home } from './components/Home';
-import About from './components/About';
-import { Car } from './components/Car';
-import { Dashboard } from './components/Dashboard';
+import Home from './containers/Home'
+import About from './components/About'
+import Car from './containers/Car'
+import Dashboard from './containers/Dashboard'
 
-export let Router = () => {
+const Router = () => {
     return (
         <Switch>
             <Route exact path="/" component={Home} />
@@ -15,3 +15,5 @@ export let Router = () => {
         </Switch>
     );
 };
+
+export default Router;

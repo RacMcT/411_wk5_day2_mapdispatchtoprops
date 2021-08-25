@@ -28,4 +28,4 @@ export let Navigation = () => {
         </AppBar>
     )
 };
-
+export default Navigation
