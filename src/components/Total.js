@@ -1,6 +1,6 @@
 import React from 'react'
 
-export let Total = ({ store }) => {    
+const Total = props => {   
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>Total:</h1>
