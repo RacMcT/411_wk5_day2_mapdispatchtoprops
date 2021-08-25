@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Button, TextField, Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import { ACTIONS } from '../redux/store';
+
 
 class AddCar extends Component {
   state = {
@@ -27,9 +27,10 @@ class AddCar extends Component {
     console.log("THE CAR", payload)
     this.props.addCar(payload)
     this.setState({ open: false })
-// add this.props.addCar function here
+    // add this.props.addCar function here
     // also add this.setState to close the dialog
   }
+  
   componentDidUpdate = (prevProps, prevState) => {
     if (prevState.open !== this.state.open) {
       this.setState({
@@ -41,8 +42,8 @@ class AddCar extends Component {
     }
   }
 
-render(){
-  return (
+  render() {
+    return (
       <Fragment>
         <div style={{ textAlign: "center" }}>
           <h1>Add Car:</h1>
@@ -68,6 +69,6 @@ render(){
           </Dialog>
         </div>
       </Fragment>
-  )
+    )
   }
 }

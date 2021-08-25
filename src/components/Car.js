@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Container, Paper, Chip } from '@material-ui/core';
-// import { Context } from '../redux/store';
+
 
 const Car = (props) => {
     const id = props.match.params.id
-    // {/* Change cars to props.cars and remove the cars.json import above */}
-    const car = props.cars.find(c => c.id == id)
+    const car = props.cars.find(c => c.id === id)
 
     return (
         <Container maxWidth="sm" className="car-container">

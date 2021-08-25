@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react'
 import { Card, CardContent, CardActions, Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import cars from '../cars.json' // remove this
+// import cars from '../cars.json' // remove this
 
 export let Home = (props) => {
     return (
