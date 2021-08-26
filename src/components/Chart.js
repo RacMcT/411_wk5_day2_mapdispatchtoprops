@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
 
-const Chart = props => {
-    const over = props.cars.filter(car => car.horsepower >= 200)
+
+
+const Chart = (props) => {
+
+  const over = props.cars.filter(car => car.horsepower >= 200)
     const under = props.cars.filter(car => car.horsepower < 200)
   
     return (
