@@ -3,7 +3,7 @@ import Chart from '../components/Chart'
 
 const mapStateToProps = (state) => {
     return {
-        chart: state.chart
+        cars: state.cars
     }
 }
 

@@ -1,16 +1,35 @@
-import React, {useEffect} from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
-
+import React, {useEffect, useState} from 'react';
+import  {PieChart}  from 'react-minimal-pie-chart';
 
 
 const Chart = (props) => {
+const [over, setOver] = useState([])
+const [under, setUnder] = useState([])
 
-  const over = props.cars.filter(car => car.horsepower >= 200)
-    const under = props.cars.filter(car => car.horsepower < 200)
+console.log(props.cars)
+
+// useEffect(()=> {
+  // console.log("mounted")
+  //   if(!props.cars) return;
   
-    return (
-      <div>
-        <PieChart
+  // const over = props.cars.filter(car => car.horsepower >= 200)
+  // const under = props.cars.filter(car => car.horsepower < 200)
+  // console.log(over)
+  // setOver(over)
+  // setUnder(under)
+  // // console.log(props.cars)
+  // }, [props.cars])
+  
+  // useEffect(()=> {
+  //   if(!over.length) return;
+  //   if(!under.length) return;
+  //   console.log("over", over.length)
+  //   console.log("under", under.length)
+  // }, [over, under])
+  
+  return (
+    <div>
+     {props.cars.length ? <PieChart
           style={{ width: "200px" }}
           data={[
             { title: "Over", value: over.length, color: "#C13C37" },
@@ -21,11 +40,12 @@ const Chart = (props) => {
             fill: "white",
             fontSize: "small"
           }}
-        />
+        /> : null }
         <Legend />
       </div>
     )
   }
+
   
   function Legend() {
     return (
@@ -41,5 +61,5 @@ const Chart = (props) => {
       </h6>
     )
   }
-  
+
   export default Chart
